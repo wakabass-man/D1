@@ -4,6 +4,8 @@
 #include "System/LyraAssetManager.h"
 #include "UObject/ObjectSaveContext.h"
 
+#include UE_INLINE_GENERATED_CPP_BY_NAME(D1CharacterData)
+
 const UD1CharacterData& UD1CharacterData::Get()//Á¢±Ù¿ë
 {
 	return ULyraAssetManager::Get().GetCharacterData();
