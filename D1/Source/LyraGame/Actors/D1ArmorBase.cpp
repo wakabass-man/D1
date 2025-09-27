@@ -57,6 +57,8 @@ void AD1ArmorBase::RefreshArmorMesh()//상태가 바뀔때의 진입점
 
 void AD1ArmorBase::SetArmorMesh(TSoftObjectPtr<USkeletalMesh> InArmorMesh)
 {
+	check(IsInGameThread());
+
 	USkeletalMesh* LoadedArmorMesh = nullptr;
 	if (InArmorMesh.IsNull() == false)
 	{

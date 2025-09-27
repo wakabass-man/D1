@@ -42,6 +42,8 @@ void UD1CosmeticManagerComponent::EndPlay(const EEndPlayReason::Type EndPlayReas
 
 void UD1CosmeticManagerComponent::RefreshArmorMesh(EArmorType ArmorType /*, const UD1ItemFragment_Equipable_Armor* ArmorFragment*/)
 {
+	check(IsInGameThread());
+
 	if (ArmorType == EArmorType::Count)
 		return;
 	
@@ -104,6 +106,8 @@ void UD1CosmeticManagerComponent::RefreshArmorMesh(EArmorType ArmorType /*, cons
 
 void UD1CosmeticManagerComponent::SetPrimaryArmorMesh(EArmorType ArmorType, TSoftObjectPtr<USkeletalMesh> ArmorMeshPtr)
 {
+	check(IsInGameThread());
+
 	if (ArmorType == EArmorType::Count)
 		return;
 	
@@ -150,6 +154,8 @@ void UD1CosmeticManagerComponent::GetMeshComponents(TArray<UMeshComponent*>& Out
 
 void UD1CosmeticManagerComponent::InitializeManager()
 {
+	check(IsInGameThread());
+
 	if (bInitialized)
 		return;
 
@@ -196,6 +202,8 @@ void UD1CosmeticManagerComponent::InitializeManager()
 
 UChildActorComponent* UD1CosmeticManagerComponent::SpawnCosmeticSlotActor(TSoftObjectPtr<USkeletalMesh> InDefaultMesh, TSoftObjectPtr<USkeletalMesh> InSecondaryMesh, FName InSkinMaterialSlotName, TSoftObjectPtr<UMaterialInterface> InSkinMaterial)
 {
+	check(IsInGameThread());
+
 	UChildActorComponent* CosmeticComponent = nullptr;
 	
 	if (ACharacter* Character = Cast<ACharacter>(GetOwner()))
@@ -204,7 +212,7 @@ UChildActorComponent* UD1CosmeticManagerComponent::SpawnCosmeticSlotActor(TSoftO
 		CosmeticComponent = NewObject<UChildActorComponent>(Character);
 		CosmeticComponent->SetChildActorClass(CosmeticSlotClass);
 		CosmeticComponent->SetupAttachment(ComponentToAttachTo);
-		CosmeticComponent->RegisterComponent();//월드에 등록
+		CosmeticComponent->RegisterComponent();//월드에 등록 및 액터 스폰
 
 		if (AD1ArmorBase* SpawnedActor = Cast<AD1ArmorBase>(CosmeticComponent->GetChildActor()))
 		{
